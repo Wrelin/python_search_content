@@ -35,7 +35,6 @@ def format_content(content):
 def search_content(url):
     req = requests.get(url, timeout=5)
     content = clean_content(req.content)
-    print(req.encoding)
     return format_content(content.decode('utf-8'))
 
 
@@ -50,6 +49,7 @@ def write_content(filename, content):
 def main():
     args = get_args()
     content = search_content(args.url)
+
     write_content(args.out, content)
     print('File successfully written.')
 
