@@ -35,7 +35,6 @@ def format_content(content):
 def search_content(url):
     req = requests.get(url, timeout=5)
     content = clean_content(req.content)
-    print(req.encoding)
     return format_content(content.decode('utf-8'))
 
 
