@@ -34,9 +34,16 @@ def get_clean_string(content, encoding):
     return re.sub(r'([ \n\t\f\r])\1+', r'\1', content)
 
 
+def get_data(url):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'
+    }
+    return requests.get(url, headers=headers, timeout=5)
+
+
 def get_content_tree(url):
-    req = requests.get(url, timeout=5)
-    content = get_clean_string(req.content, req.encoding)
+    data = get_data(url)
+    content = get_clean_string(data.content, data.encoding)
 
     root = html.fromstring(content)
     tree = ContentTree()

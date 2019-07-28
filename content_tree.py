@@ -1,3 +1,6 @@
+from operator import attrgetter
+
+
 class ContentTree:
     def __init__(self, parent=None, content=''):
         self.parent = parent
@@ -9,8 +12,9 @@ class ContentTree:
         self.children.append(child)
 
     def set_content(self, content):
-        self.content = content
-        if self.content:
+        content = content.strip()
+        if content:
+            self.content = content
             self.update_weight(len(content))
 
     def update_weight(self, weight):
@@ -19,7 +23,7 @@ class ContentTree:
             self.parent.update_weight(weight)
 
     def get_main_child(self):
-        main_child = max(self.children, key=lambda child: child.weight)
+        main_child = max(self.children, key=attrgetter('weight'))
         unnecessary_content = int(100 * (self.weight - main_child.weight) / self.weight)
 
         if unnecessary_content < 5:
