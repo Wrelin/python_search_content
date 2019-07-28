@@ -20,8 +20,12 @@ class ContentTree:
 
     def get_main_child(self):
         main_child = max(self.children, key=lambda child: child.weight)
-        if int(100 * (self.weight - main_child.weight) / self.weight) < 4:  # четверку просто подобрал
+        unnecessary_content = int(100 * (self.weight - main_child.weight) / self.weight)
+
+        if unnecessary_content < 5:
             main_child = main_child.get_main_child()
+        elif unnecessary_content > 30:
+            main_child = self
 
         return main_child
 
